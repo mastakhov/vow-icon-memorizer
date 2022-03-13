@@ -1,38 +1,76 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <img v-if="currentImage" :src="currentImage.src"><br/>
+    <input v-if="currentImage" v-model="answer" @change="onAnswer">
   </div>
 </template>
 
 <script>
+
+import { vowImage } from './vowImage';
+
 export default {
   name: 'HelloWorld',
+  components: vowImage,
+  data() {
+    return {
+      images: [
+        { src: 'arrival.jpg', label: ['прибытие'] },
+        { src: 'hive.jpg', label: ['рой','улей'] },
+        { src: 'love.jpg', label: ['любовь','цветок'] },
+        { src: 'black_garden.jpg', label: ['сад','черный сад','чёрный сад'] },
+        { src: 'black_heart.jpg', label: ['чёрное сердце','черное сердце','клякса'] },
+        { src: 'dread.jpg', label: ['дырка','скорбь'] },
+        { src: 'darkness.jpg', label: ['тьма'] },
+        { src: 'drink.jpg', label: ['чаша','напиток'] },
+        { src: 'earth.jpg', label: ['земля'] },
+        { src: 'fleet.jpg', label: ['пирамиды','флот'] },
+        { src: 'forsaken.jpg', label: ['форсейкен','презренные'] },
+        { src: 'gift.jpg', label: ['руки','передача'] },
+        { src: 'guardian.jpg', label: ['гардиан','страж'] },
+        { src: 'higher_dimension.jpg', label: ['','высшее измерение'] },
+        { src: 'hive.jpg', label: ['глаза','улей'] },
+        { src: 'light.jpg', label: ['свет'] },
+        { src: 'love.jpg', label: ['цветок','любовь'] },
+        { src: 'memory.jpg', label: ['мозг','память'] },
+        { src: 'murder.jpg', label: ['япония','убийство'] },
+        { src: 'pyramid.jpg', label: ['треугольник','пирамида'] },
+        { src: 'savathun.jpg', label: ['вичквин','саватун'] },
+        { src: 'stop.jpg', label: ['квадрат','стоп'] },
+        { src: 'tower.jpg', label: ['баннер','башня'] },
+        { src: 'traveler.jpg', label: ['странник'] },
+        { src: 'witness.jpg', label: ['витнесс','свидетель'] },
+        { src: 'worm.jpg', label: ['змея','червь'] },
+        { src: 'worship.jpg', label: ['бог','поклонение'] },
+      ],
+      currentImage: { src: 'arrival.jpg', label: 'прибытие' },
+      currentIndex: 0,
+      answer: ''
+    }
+  },
+  methods: {
+    onAnswer() {
+      if (this.answer === this.currentImage.label) {
+        this.setNewQuestion();
+      }
+    },
+    setNewQuestion() {
+        this.answer = '';
+        var newImageIndex = this.getRandomInt(this.images.length, this.currentIndex);
+        this.currentImage = this.images[newImageIndex];
+        this.currentIndex = newImageIndex;      
+    },
+    getRandomInt(max, exclude) {
+      var res = Math.floor(Math.random() * max);
+      while (res === exclude) {
+        res = Math.floor(Math.random() * max);
+      }
+      return res;
+    }
+  },
+  mounted() {
+    this.setNewQuestion();
+  },
   props: {
     msg: String
   }
