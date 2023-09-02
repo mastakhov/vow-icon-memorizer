@@ -1,14 +1,14 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Memorizer />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Memorizer from './components/Memorizer.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Memorizer
   }
 }
 </script>
